@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="..\buildMultiTargeting\Testetecnico_Ultracar.props" />
+</Project>

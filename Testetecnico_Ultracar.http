@@ -1,0 +1,6 @@
+@Testetecnico_Ultracar_HostAddress = http://localhost:5269
+
+GET {{Testetecnico_Ultracar_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
