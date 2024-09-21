@@ -22,19 +22,13 @@ namespace Testetecnico_Ultracar.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("Testetecnico_Ultracar.Models.Estoque", b =>
+            modelBuilder.Entity("Testetecnico_Ultracar.Models.Entrega", b =>
                 {
-                    b.Property<int>("EstoqueId")
-                        .ValueGeneratedOnAdd()
+                    b.Property<int>("EntregaId")
                         .HasColumnType("integer");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("EstoqueId"));
-
-                    b.Property<DateTime>("Entregue")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<DateTime>("Enviado")
-                        .HasColumnType("timestamp with time zone");
+                    b.Property<int>("Cep")
+                        .HasColumnType("integer");
 
                     b.Property<string>("EstadoDeEspera")
                         .IsRequired()
@@ -46,10 +40,38 @@ namespace Testetecnico_Ultracar.Migrations
                     b.Property<int>("PecaId")
                         .HasColumnType("integer");
 
-                    b.HasKey("EstoqueId");
+                    b.HasKey("EntregaId");
 
                     b.HasIndex("OrcamentoId")
                         .IsUnique();
+
+                    b.ToTable("Entrega");
+                });
+
+            modelBuilder.Entity("Testetecnico_Ultracar.Models.Estoque", b =>
+                {
+                    b.Property<int>("EstoqueId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("EstoqueId"));
+
+                    b.Property<int>("EntregaId")
+                        .HasColumnType("integer");
+
+                    b.Property<DateTime>("Entregue")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<DateTime>("Enviado")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<int>("PecaId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("Quantidade")
+                        .HasColumnType("integer");
+
+                    b.HasKey("EstoqueId");
 
                     b.HasIndex("PecaId")
                         .IsUnique();
@@ -90,9 +112,6 @@ namespace Testetecnico_Ultracar.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<int>("OrcamentoId")
-                        .HasColumnType("integer");
-
                     b.Property<int>("QuantidadeEstoque")
                         .HasColumnType("integer");
 
@@ -104,48 +123,75 @@ namespace Testetecnico_Ultracar.Migrations
                     b.ToTable("Pecas");
                 });
 
-            modelBuilder.Entity("Testetecnico_Ultracar.Models.Estoque", b =>
+            modelBuilder.Entity("Testetecnico_Ultracar.Models.Entrega", b =>
                 {
-                    b.HasOne("Testetecnico_Ultracar.Models.Orcamento", "Orcamento")
-                        .WithOne("Estoque")
-                        .HasForeignKey("Testetecnico_Ultracar.Models.Estoque", "OrcamentoId")
+                    b.HasOne("Testetecnico_Ultracar.Models.Estoque", "Estoque")
+                        .WithMany("Entregas")
+                        .HasForeignKey("EntregaId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("Testetecnico_Ultracar.Models.Orcamento", "Orcamento")
+                        .WithOne("Entrega")
+                        .HasForeignKey("Testetecnico_Ultracar.Models.Entrega", "OrcamentoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Estoque");
+
+                    b.Navigation("Orcamento");
+                });
+
+            modelBuilder.Entity("Testetecnico_Ultracar.Models.Estoque", b =>
+                {
                     b.HasOne("Testetecnico_Ultracar.Models.Peca", "Peca")
                         .WithOne("Estoque")
                         .HasForeignKey("Testetecnico_Ultracar.Models.Estoque", "PecaId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Orcamento");
-
                     b.Navigation("Peca");
                 });
 
             modelBuilder.Entity("Testetecnico_Ultracar.Models.Peca", b =>
                 {
+                    b.HasOne("Testetecnico_Ultracar.Models.Entrega", "Entrega")
+                        .WithMany("Peca")
+                        .HasForeignKey("PecaId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("Testetecnico_Ultracar.Models.Orcamento", "Orcamento")
                         .WithMany("Peca")
                         .HasForeignKey("PecaId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.Navigation("Entrega");
+
                     b.Navigation("Orcamento");
+                });
+
+            modelBuilder.Entity("Testetecnico_Ultracar.Models.Entrega", b =>
+                {
+                    b.Navigation("Peca");
+                });
+
+            modelBuilder.Entity("Testetecnico_Ultracar.Models.Estoque", b =>
+                {
+                    b.Navigation("Entregas");
                 });
 
             modelBuilder.Entity("Testetecnico_Ultracar.Models.Orcamento", b =>
                 {
-                    b.Navigation("Estoque")
-                        .IsRequired();
+                    b.Navigation("Entrega");
 
                     b.Navigation("Peca");
                 });
 
             modelBuilder.Entity("Testetecnico_Ultracar.Models.Peca", b =>
                 {
-                    b.Navigation("Estoque")
-                        .IsRequired();
+                    b.Navigation("Estoque");
                 });
 #pragma warning restore 612, 618
         }

@@ -7,7 +7,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Testetecnico_Ultracar.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialCreate : Migration
+    public partial class first : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -28,18 +28,44 @@ namespace Testetecnico_Ultracar.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Entrega",
+                columns: table => new
+                {
+                    EntregaId = table.Column<int>(type: "integer", nullable: false),
+                    Cep = table.Column<int>(type: "integer", nullable: false),
+                    OrcamentoId = table.Column<int>(type: "integer", nullable: false),
+                    PecaId = table.Column<int>(type: "integer", nullable: false),
+                    EstadoDeEspera = table.Column<string>(type: "text", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Entrega", x => x.EntregaId);
+                    table.ForeignKey(
+                        name: "FK_Entrega_Orcamentos_OrcamentoId",
+                        column: x => x.OrcamentoId,
+                        principalTable: "Orcamentos",
+                        principalColumn: "OrcamentoId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Pecas",
                 columns: table => new
                 {
                     PecaId = table.Column<int>(type: "integer", nullable: false),
                     Name = table.Column<string>(type: "text", nullable: false),
                     Valor = table.Column<decimal>(type: "numeric", nullable: false),
-                    QuantidadeEstoque = table.Column<int>(type: "integer", nullable: false),
-                    OrcamentoId = table.Column<int>(type: "integer", nullable: false)
+                    QuantidadeEstoque = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Pecas", x => x.PecaId);
+                    table.ForeignKey(
+                        name: "FK_Pecas_Entrega_PecaId",
+                        column: x => x.PecaId,
+                        principalTable: "Entrega",
+                        principalColumn: "EntregaId",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Pecas_Orcamentos_PecaId",
                         column: x => x.PecaId,
@@ -54,21 +80,15 @@ namespace Testetecnico_Ultracar.Migrations
                 {
                     EstoqueId = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    OrcamentoId = table.Column<int>(type: "integer", nullable: false),
                     PecaId = table.Column<int>(type: "integer", nullable: false),
-                    EstadoDeEspera = table.Column<string>(type: "text", nullable: false),
+                    Quantidade = table.Column<int>(type: "integer", nullable: false),
+                    EntregaId = table.Column<int>(type: "integer", nullable: false),
                     Enviado = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     Entregue = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Estoques", x => x.EstoqueId);
-                    table.ForeignKey(
-                        name: "FK_Estoques_Orcamentos_OrcamentoId",
-                        column: x => x.OrcamentoId,
-                        principalTable: "Orcamentos",
-                        principalColumn: "OrcamentoId",
-                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Estoques_Pecas_PecaId",
                         column: x => x.PecaId,
@@ -78,8 +98,8 @@ namespace Testetecnico_Ultracar.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Estoques_OrcamentoId",
-                table: "Estoques",
+                name: "IX_Entrega_OrcamentoId",
+                table: "Entrega",
                 column: "OrcamentoId",
                 unique: true);
 
@@ -88,16 +108,31 @@ namespace Testetecnico_Ultracar.Migrations
                 table: "Estoques",
                 column: "PecaId",
                 unique: true);
+
+            migrationBuilder.AddForeignKey(
+                name: "FK_Entrega_Estoques_EntregaId",
+                table: "Entrega",
+                column: "EntregaId",
+                principalTable: "Estoques",
+                principalColumn: "EstoqueId",
+                onDelete: ReferentialAction.Cascade);
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropForeignKey(
+                name: "FK_Entrega_Estoques_EntregaId",
+                table: "Entrega");
+
             migrationBuilder.DropTable(
                 name: "Estoques");
 
             migrationBuilder.DropTable(
                 name: "Pecas");
+
+            migrationBuilder.DropTable(
+                name: "Entrega");
 
             migrationBuilder.DropTable(
                 name: "Orcamentos");

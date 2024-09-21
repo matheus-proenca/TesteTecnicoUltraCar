@@ -17,7 +17,6 @@ namespace Testetecnico_Ultracar.Models
         public ICollection<Peca>? Peca { get; set; }
         [Required]
         public decimal ValorTotal {  get; set; }
-        [Required]
-        public Estoque? Estoque { get; set; }
+        public Entrega? Entrega { get; set; }
     }
 }

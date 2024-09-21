@@ -103,3 +103,4 @@ C:\Users\mathe\source\repos\Testetecnico_Ultracar\Testetecnico_Ultracar\obj\Debu
 C:\Users\mathe\source\repos\Testetecnico_Ultracar\Testetecnico_Ultracar\obj\Debug\net8.0\Testetecnico_Ultracar.pdb
 C:\Users\mathe\source\repos\Testetecnico_Ultracar\Testetecnico_Ultracar\obj\Debug\net8.0\Testetecnico_Ultracar.genruntimeconfig.cache
 C:\Users\mathe\source\repos\Testetecnico_Ultracar\Testetecnico_Ultracar\obj\Debug\net8.0\ref\Testetecnico_Ultracar.dll
+C:\Users\mathe\source\repos\Testetecnico_Ultracar\Testetecnico_Ultracar\obj\Debug\net8.0\Testetecnico_Ultracar.sourcelink.json
