@@ -8,6 +8,7 @@ namespace Testetecnico_Ultracar.Models
     {
         [Key]
         [Required]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int OrcamentoId { get; set; }
         [Required]
         public string NomeCliente { get; set; }

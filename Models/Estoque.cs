@@ -9,6 +9,7 @@ namespace Testetecnico_Ultracar.Models
     {
         [Key]
         [Required]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int EstoqueId { get; set; }
         [Required]
         public int PecaId { get; set; }

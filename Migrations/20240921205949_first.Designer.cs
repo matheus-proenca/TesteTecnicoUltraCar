@@ -12,7 +12,7 @@ using Testetecnico_Ultracar;
 namespace Testetecnico_Ultracar.Migrations
 {
     [DbContext(typeof(Context))]
-    [Migration("20240921203735_first")]
+    [Migration("20240921205949_first")]
     partial class first
     {
         /// <inheritdoc />
@@ -28,6 +28,7 @@ namespace Testetecnico_Ultracar.Migrations
             modelBuilder.Entity("Testetecnico_Ultracar.Models.Entrega", b =>
                 {
                     b.Property<int>("EntregaId")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("integer");
 
                     b.Property<int>("Cep")
@@ -109,6 +110,7 @@ namespace Testetecnico_Ultracar.Migrations
             modelBuilder.Entity("Testetecnico_Ultracar.Models.Peca", b =>
                 {
                     b.Property<int>("PecaId")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("integer");
 
                     b.Property<string>("Name")

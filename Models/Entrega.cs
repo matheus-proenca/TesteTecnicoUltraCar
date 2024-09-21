@@ -7,6 +7,7 @@ namespace Testetecnico_Ultracar.Models
     {
         [Key]
         [Required]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int EntregaId { get; set; }
         [Required]
         public int Cep { get; set; }

@@ -25,6 +25,7 @@ namespace Testetecnico_Ultracar.Migrations
             modelBuilder.Entity("Testetecnico_Ultracar.Models.Entrega", b =>
                 {
                     b.Property<int>("EntregaId")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("integer");
 
                     b.Property<int>("Cep")
@@ -106,6 +107,7 @@ namespace Testetecnico_Ultracar.Migrations
             modelBuilder.Entity("Testetecnico_Ultracar.Models.Peca", b =>
                 {
                     b.Property<int>("PecaId")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("integer");
 
                     b.Property<string>("Name")
