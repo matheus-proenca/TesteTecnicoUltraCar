@@ -15,7 +15,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Testetecnico_Ultracar")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+1f1c16ff64b5c00c9b95bef1e93f184c1637ef33")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+cd284478e0c83b490d90766ad5ce4ae42647c34c")]
 [assembly: System.Reflection.AssemblyProductAttribute("Testetecnico_Ultracar")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Testetecnico_Ultracar")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

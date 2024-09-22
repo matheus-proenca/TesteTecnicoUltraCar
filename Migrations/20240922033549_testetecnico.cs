@@ -7,7 +7,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Testetecnico_Ultracar.Migrations
 {
     /// <inheritdoc />
-    public partial class first : Migration
+    public partial class testetecnico : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -97,6 +97,33 @@ namespace Testetecnico_Ultracar.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "QuantidadePecas",
+                columns: table => new
+                {
+                    QuantidadePecaId = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    OrcamentoId = table.Column<int>(type: "integer", nullable: false),
+                    PecaId = table.Column<int>(type: "integer", nullable: false),
+                    Quantidade = table.Column<int>(type: "integer", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_QuantidadePecas", x => x.QuantidadePecaId);
+                    table.ForeignKey(
+                        name: "FK_QuantidadePecas_Orcamentos_OrcamentoId",
+                        column: x => x.OrcamentoId,
+                        principalTable: "Orcamentos",
+                        principalColumn: "OrcamentoId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_QuantidadePecas_Pecas_PecaId",
+                        column: x => x.PecaId,
+                        principalTable: "Pecas",
+                        principalColumn: "PecaId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_Entrega_OrcamentoId",
                 table: "Entrega",
@@ -106,6 +133,18 @@ namespace Testetecnico_Ultracar.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_Estoques_PecaId",
                 table: "Estoques",
+                column: "PecaId",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_QuantidadePecas_OrcamentoId",
+                table: "QuantidadePecas",
+                column: "OrcamentoId",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_QuantidadePecas_PecaId",
+                table: "QuantidadePecas",
                 column: "PecaId",
                 unique: true);
 
@@ -124,6 +163,9 @@ namespace Testetecnico_Ultracar.Migrations
             migrationBuilder.DropForeignKey(
                 name: "FK_Entrega_Estoques_EntregaId",
                 table: "Entrega");
+
+            migrationBuilder.DropTable(
+                name: "QuantidadePecas");
 
             migrationBuilder.DropTable(
                 name: "Estoques");

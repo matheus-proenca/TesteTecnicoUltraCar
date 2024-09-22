@@ -9,6 +9,7 @@ namespace Testetecnico_Ultracar
         public DbSet<Peca> Pecas { get; set; } = null!;
         public DbSet<Orcamento> Orcamentos { get; set; } = null!;
         public DbSet<Estoque> Estoques { get; set; } = null!;
+        public DbSet<QuantidadePeca> QuantidadePecas { get; set; } = null!;
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseNpgsql("Host=localhost;Port=5432;Database=testetecnico;Username=usuario;Password=password");
@@ -22,6 +23,10 @@ namespace Testetecnico_Ultracar
             modelBuilder.Entity<Orcamento>().HasMany(o => o.Peca).WithOne(p => p.Orcamento).HasForeignKey(k => k.PecaId);
             modelBuilder.Entity<Entrega>().HasMany(p => p.Peca).WithOne(e => e.Entrega).HasForeignKey(k => k.PecaId);
             modelBuilder.Entity<Entrega>().HasOne(o => o.Orcamento).WithOne(e => e.Entrega).HasForeignKey<Entrega>(k => k.OrcamentoId);
+            modelBuilder.Entity<QuantidadePeca>().HasOne(q => q.Orcamento).WithOne(o => o.QuantidadePeca)
+                .HasForeignKey<QuantidadePeca>(k => k.OrcamentoId);
+            modelBuilder.Entity<QuantidadePeca>().HasOne(q => q.Peca).WithOne(p => p.QuantidadePeca)
+                .HasForeignKey<QuantidadePeca>(k => k.PecaId);
 
         }
     }

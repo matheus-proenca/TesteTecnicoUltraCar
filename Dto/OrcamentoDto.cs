@@ -7,6 +7,7 @@ namespace Testetecnico_Ultracar.Dto
         public string NomeClient {  get; set; }
         public string PlacaVeiculo { get; set; }
         public int PecaId { get; set; }
+        public int QuantidadePeca {  get; set; }
         public decimal Valor { get; set; }
     }
 

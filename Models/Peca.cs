@@ -15,6 +15,7 @@ namespace Testetecnico_Ultracar.Models
         public decimal Valor { get; set; }
         [Required]
         public int QuantidadeEstoque { get; set; }
+        public QuantidadePeca QuantidadePeca { get; set; }
         public Orcamento Orcamento { get; set; }
         public Estoque? Estoque { get; set; }
         public Entrega? Entrega { get; set; }

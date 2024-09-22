@@ -12,8 +12,8 @@ using Testetecnico_Ultracar;
 namespace Testetecnico_Ultracar.Migrations
 {
     [DbContext(typeof(Context))]
-    [Migration("20240921205949_first")]
-    partial class first
+    [Migration("20240922033549_testetecnico")]
+    partial class testetecnico
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -128,6 +128,34 @@ namespace Testetecnico_Ultracar.Migrations
                     b.ToTable("Pecas");
                 });
 
+            modelBuilder.Entity("Testetecnico_Ultracar.Models.QuantidadePeca", b =>
+                {
+                    b.Property<int>("QuantidadePecaId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("QuantidadePecaId"));
+
+                    b.Property<int>("OrcamentoId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("PecaId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("Quantidade")
+                        .HasColumnType("integer");
+
+                    b.HasKey("QuantidadePecaId");
+
+                    b.HasIndex("OrcamentoId")
+                        .IsUnique();
+
+                    b.HasIndex("PecaId")
+                        .IsUnique();
+
+                    b.ToTable("QuantidadePecas");
+                });
+
             modelBuilder.Entity("Testetecnico_Ultracar.Models.Entrega", b =>
                 {
                     b.HasOne("Testetecnico_Ultracar.Models.Estoque", "Estoque")
@@ -177,6 +205,25 @@ namespace Testetecnico_Ultracar.Migrations
                     b.Navigation("Orcamento");
                 });
 
+            modelBuilder.Entity("Testetecnico_Ultracar.Models.QuantidadePeca", b =>
+                {
+                    b.HasOne("Testetecnico_Ultracar.Models.Orcamento", "Orcamento")
+                        .WithOne("QuantidadePeca")
+                        .HasForeignKey("Testetecnico_Ultracar.Models.QuantidadePeca", "OrcamentoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Testetecnico_Ultracar.Models.Peca", "Peca")
+                        .WithOne("QuantidadePeca")
+                        .HasForeignKey("Testetecnico_Ultracar.Models.QuantidadePeca", "PecaId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Orcamento");
+
+                    b.Navigation("Peca");
+                });
+
             modelBuilder.Entity("Testetecnico_Ultracar.Models.Entrega", b =>
                 {
                     b.Navigation("Peca");
@@ -192,11 +239,16 @@ namespace Testetecnico_Ultracar.Migrations
                     b.Navigation("Entrega");
 
                     b.Navigation("Peca");
+
+                    b.Navigation("QuantidadePeca");
                 });
 
             modelBuilder.Entity("Testetecnico_Ultracar.Models.Peca", b =>
                 {
                     b.Navigation("Estoque");
+
+                    b.Navigation("QuantidadePeca")
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }
