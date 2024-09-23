@@ -7,7 +7,6 @@ namespace Testetecnico_Ultracar.Dto
         public string NomeClient {  get; set; }
         public int Cep {  get; set; }
         public string PlacaVeiculo { get; set; }
-        public int QuantidadePeca {  get; set; }
     }
 
     public class ResponseOrcamento

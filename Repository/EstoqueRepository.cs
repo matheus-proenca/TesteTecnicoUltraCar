@@ -28,7 +28,7 @@ namespace Testetecnico_Ultracar.Repository
                 Quantidade = estoque.Entrega.quantidadeEnviada,
                 CepEstrega = estoque.Entrega.Cep,
                 Enviado = estoque.Enviado,
-                Entregue = (DateTime)estoque.Entregue,
+                Entregue = (DateTime?)estoque.Entregue,
             };
         }
     }
