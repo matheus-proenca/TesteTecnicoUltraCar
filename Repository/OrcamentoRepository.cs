@@ -60,7 +60,6 @@ namespace Testetecnico_Ultracar.Repository
                 NomeCliente = orcamento.NomeClient,
                 Cep = orcamento.Cep,
                 PlacaVeiculo = orcamento.PlacaVeiculo,
-                ValorTotal = 0
             };
             _context.Orcamento.Add(orcamentos);
             _context.SaveChanges();
