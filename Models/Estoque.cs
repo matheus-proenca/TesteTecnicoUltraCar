@@ -12,17 +12,11 @@ namespace Testetecnico_Ultracar.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int EstoqueId { get; set; }
         [Required]
-        public int PecaId { get; set; }
-        [Required]
-        public Peca Peca { get; set; }
-        [Required]
-        public int Quantidade {  get; set; }
-        [Required]
         [ForeignKey("EntregaId")]
         public int EntregaId { get; set; }
         [Required]
-        public ICollection<Entrega>? Entregas { get; set; }
+        public Entrega Entrega { get; set; }
         public DateTime Enviado { get; set; } = DateTime.Now;
-        public DateTime Entregue { get; set; }
+        public DateTime? Entregue { get; set; } = null;
     }
 }

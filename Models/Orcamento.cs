@@ -13,9 +13,9 @@ namespace Testetecnico_Ultracar.Models
         [Required]
         public string NomeCliente { get; set; }
         [Required]
-        public string PlacaVeiculo { get; set; }
+        public int Cep {  get; set; }
         [Required]
-        public ICollection<Peca>? Peca { get; set; }
+        public string PlacaVeiculo { get; set; }
         public QuantidadePeca? QuantidadePeca { get; set; }
         [Required]
         public decimal ValorTotal {  get; set; }

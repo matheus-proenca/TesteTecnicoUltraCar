@@ -11,6 +11,6 @@
         public int Quantidade { get; set; }
         public int CepEstrega { get; set; }
         public DateTime Enviado { get; set; }
-        public DateTime Entregue { get; set; }
+        public DateTime? Entregue { get; set; } = null;
     }
 }

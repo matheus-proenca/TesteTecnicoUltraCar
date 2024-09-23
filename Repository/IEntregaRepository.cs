@@ -5,6 +5,6 @@ namespace Testetecnico_Ultracar.Repository
     public interface IEntregaRepository
     {
         ResponseEntrega GetEntrega(int entregaId);
-        ResponseCep GetCep(int cepId);
+        Task<ResponseCep> GetCep(int entregaId);
     }
 }

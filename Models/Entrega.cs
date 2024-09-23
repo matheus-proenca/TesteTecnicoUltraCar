@@ -20,8 +20,9 @@ namespace Testetecnico_Ultracar.Models
         [Required]
         public int PecaId { get; set; }
         [Required]
-        public ICollection<Peca>? Peca { get; set; }
+        public Peca? Peca { get; set; }
         [Required]
+        public int quantidadeEnviada { get; set; }
         public Estoque Estoque { get; set; }
         public string EstadoDeEspera { get; set; } = "Espera";
     }

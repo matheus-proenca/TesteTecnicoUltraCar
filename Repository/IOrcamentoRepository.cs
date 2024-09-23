@@ -5,8 +5,8 @@ namespace Testetecnico_Ultracar.Repository
     public interface IOrcamentoRepository
     {
         string CreateOrcamento(OrcamentoDto orcamento);
-        string CreateEntregaPeca(int orcamentoId, int pecaId, int cep);
-        string PecaStatusUpdate(int orcamentoId,int pecaId);
-        ReponseOrcamento GetOrcamento(int orcamentoId);
+        string AddPeca(int pecaId, int orcamentoId, int quantidade);
+        string PecaStatusUpdate(int entregaId);
+        ResponseOrcamento GetOrcamento(int orcamentoId);
     }
 }

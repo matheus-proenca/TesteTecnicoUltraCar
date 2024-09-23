@@ -11,7 +11,8 @@ namespace Testetecnico_Ultracar.Dto
         public int EntregaId { get; set; }
         public int Cep { get; set; }
         public string ClienteNome { get; set; }
-        public ICollection<Peca> Pecas { get; set; }
+        public Peca Peca { get; set; }
+        public int QuantidadePeca { get; set; }
         public string EstadoDeEspera {  get; set; }
     }
     public class ResponseCep
@@ -23,7 +24,7 @@ namespace Testetecnico_Ultracar.Dto
         public string? Bairro { get; set; }
         public string? Localidade { get; set; }
         public string? Estado { get; set; }
-        public string? Região { get; set; }
+        public string? Regiao { get; set; }
         public string? Uf { get; set; }
         public string? Ibge { get; set; }
         public string? Gia { get; set; }
