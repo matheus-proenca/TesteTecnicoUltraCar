@@ -7,20 +7,16 @@ namespace Testetecnico_Ultracar.Models
 {
     public class Estoque
     {
+        [Key]
         [Required]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int EstoqueId { get; set; }
-        [ForeignKey("OrcamentoId")]
         [Required]
-        public int OrcamentoId { get; set; }
+        [ForeignKey("EntregaId")]
+        public int EntregaId { get; set; }
         [Required]
-        public Orcamento? Orcamento { get; set; }
-        [ForeignKey("PecaId")]
-        [Required]
-        public int PecaId {  get; set; }
-        [Required]
-        public Peca? Peca { get; set; }
-        public string EstadoDeEspera { get; set; } = "Espera";
+        public Entrega Entrega { get; set; }
         public DateTime Enviado { get; set; } = DateTime.Now;
-        public DateTime Entregue { get; set; }
+        public DateTime? Entregue { get; set; } = null;
     }
 }

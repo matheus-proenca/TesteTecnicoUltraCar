@@ -22,19 +22,16 @@ namespace Testetecnico_Ultracar.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("Testetecnico_Ultracar.Models.Estoque", b =>
+            modelBuilder.Entity("Testetecnico_Ultracar.Models.Entrega", b =>
                 {
-                    b.Property<int>("EstoqueId")
+                    b.Property<int>("EntregaId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("EstoqueId"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("EntregaId"));
 
-                    b.Property<DateTime>("Entregue")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<DateTime>("Enviado")
-                        .HasColumnType("timestamp with time zone");
+                    b.Property<int>("Cep")
+                        .HasColumnType("integer");
 
                     b.Property<string>("EstadoDeEspera")
                         .IsRequired()
@@ -46,7 +43,10 @@ namespace Testetecnico_Ultracar.Migrations
                     b.Property<int>("PecaId")
                         .HasColumnType("integer");
 
-                    b.HasKey("EstoqueId");
+                    b.Property<int>("quantidadeEnviada")
+                        .HasColumnType("integer");
+
+                    b.HasKey("EntregaId");
 
                     b.HasIndex("OrcamentoId")
                         .IsUnique();
@@ -54,7 +54,32 @@ namespace Testetecnico_Ultracar.Migrations
                     b.HasIndex("PecaId")
                         .IsUnique();
 
-                    b.ToTable("Estoques");
+                    b.ToTable("Entrega");
+                });
+
+            modelBuilder.Entity("Testetecnico_Ultracar.Models.Estoque", b =>
+                {
+                    b.Property<int>("EstoqueId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("EstoqueId"));
+
+                    b.Property<int>("EntregaId")
+                        .HasColumnType("integer");
+
+                    b.Property<DateTime?>("Entregue")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<DateTime>("Enviado")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.HasKey("EstoqueId");
+
+                    b.HasIndex("EntregaId")
+                        .IsUnique();
+
+                    b.ToTable("Estoque");
                 });
 
             modelBuilder.Entity("Testetecnico_Ultracar.Models.Orcamento", b =>
@@ -64,6 +89,9 @@ namespace Testetecnico_Ultracar.Migrations
                         .HasColumnType("integer");
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("OrcamentoId"));
+
+                    b.Property<int>("Cep")
+                        .HasColumnType("integer");
 
                     b.Property<string>("NomeCliente")
                         .IsRequired()
@@ -78,20 +106,23 @@ namespace Testetecnico_Ultracar.Migrations
 
                     b.HasKey("OrcamentoId");
 
-                    b.ToTable("Orcamentos");
+                    b.ToTable("Orcamento");
                 });
 
             modelBuilder.Entity("Testetecnico_Ultracar.Models.Peca", b =>
                 {
                     b.Property<int>("PecaId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("PecaId"));
+
+                    b.Property<int?>("EstoqueId")
                         .HasColumnType("integer");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("text");
-
-                    b.Property<int>("OrcamentoId")
-                        .HasColumnType("integer");
 
                     b.Property<int>("QuantidadeEstoque")
                         .HasColumnType("integer");
@@ -101,20 +132,50 @@ namespace Testetecnico_Ultracar.Migrations
 
                     b.HasKey("PecaId");
 
-                    b.ToTable("Pecas");
+                    b.HasIndex("EstoqueId");
+
+                    b.ToTable("Peca");
                 });
 
-            modelBuilder.Entity("Testetecnico_Ultracar.Models.Estoque", b =>
+            modelBuilder.Entity("Testetecnico_Ultracar.Models.QuantidadePeca", b =>
+                {
+                    b.Property<int>("QuantidadePecaId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("QuantidadePecaId"));
+
+                    b.Property<int>("OrcamentoId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("PecaId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("Quantidade")
+                        .HasColumnType("integer");
+
+                    b.HasKey("QuantidadePecaId");
+
+                    b.HasIndex("OrcamentoId")
+                        .IsUnique();
+
+                    b.HasIndex("PecaId")
+                        .IsUnique();
+
+                    b.ToTable("QuantidadePeca");
+                });
+
+            modelBuilder.Entity("Testetecnico_Ultracar.Models.Entrega", b =>
                 {
                     b.HasOne("Testetecnico_Ultracar.Models.Orcamento", "Orcamento")
-                        .WithOne("Estoque")
-                        .HasForeignKey("Testetecnico_Ultracar.Models.Estoque", "OrcamentoId")
+                        .WithOne("Entrega")
+                        .HasForeignKey("Testetecnico_Ultracar.Models.Entrega", "OrcamentoId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Testetecnico_Ultracar.Models.Peca", "Peca")
-                        .WithOne("Estoque")
-                        .HasForeignKey("Testetecnico_Ultracar.Models.Estoque", "PecaId")
+                        .WithOne("Entrega")
+                        .HasForeignKey("Testetecnico_Ultracar.Models.Entrega", "PecaId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -123,29 +184,63 @@ namespace Testetecnico_Ultracar.Migrations
                     b.Navigation("Peca");
                 });
 
+            modelBuilder.Entity("Testetecnico_Ultracar.Models.Estoque", b =>
+                {
+                    b.HasOne("Testetecnico_Ultracar.Models.Entrega", "Entrega")
+                        .WithOne("Estoque")
+                        .HasForeignKey("Testetecnico_Ultracar.Models.Estoque", "EntregaId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Entrega");
+                });
+
             modelBuilder.Entity("Testetecnico_Ultracar.Models.Peca", b =>
                 {
+                    b.HasOne("Testetecnico_Ultracar.Models.Estoque", "Estoque")
+                        .WithMany()
+                        .HasForeignKey("EstoqueId");
+
+                    b.Navigation("Estoque");
+                });
+
+            modelBuilder.Entity("Testetecnico_Ultracar.Models.QuantidadePeca", b =>
+                {
                     b.HasOne("Testetecnico_Ultracar.Models.Orcamento", "Orcamento")
-                        .WithMany("Peca")
-                        .HasForeignKey("PecaId")
+                        .WithOne("QuantidadePeca")
+                        .HasForeignKey("Testetecnico_Ultracar.Models.QuantidadePeca", "OrcamentoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Testetecnico_Ultracar.Models.Peca", "Peca")
+                        .WithOne("QuantidadePeca")
+                        .HasForeignKey("Testetecnico_Ultracar.Models.QuantidadePeca", "PecaId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Orcamento");
+
+                    b.Navigation("Peca");
+                });
+
+            modelBuilder.Entity("Testetecnico_Ultracar.Models.Entrega", b =>
+                {
+                    b.Navigation("Estoque")
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Testetecnico_Ultracar.Models.Orcamento", b =>
                 {
-                    b.Navigation("Estoque")
-                        .IsRequired();
+                    b.Navigation("Entrega");
 
-                    b.Navigation("Peca");
+                    b.Navigation("QuantidadePeca");
                 });
 
             modelBuilder.Entity("Testetecnico_Ultracar.Models.Peca", b =>
                 {
-                    b.Navigation("Estoque")
-                        .IsRequired();
+                    b.Navigation("Entrega");
+
+                    b.Navigation("QuantidadePeca");
                 });
 #pragma warning restore 612, 618
         }

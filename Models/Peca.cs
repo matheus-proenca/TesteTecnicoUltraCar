@@ -5,7 +5,9 @@ namespace Testetecnico_Ultracar.Models
 {
     public class Peca
     {
+        [Key]
         [Required]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int PecaId { get; set; }
         [Required]
         public string Name { get; set; }
@@ -13,12 +15,8 @@ namespace Testetecnico_Ultracar.Models
         public decimal Valor { get; set; }
         [Required]
         public int QuantidadeEstoque { get; set; }
-        [ForeignKey("OrcamentoId")]
-        [Required]
-        public int OrcamentoId { get; set; }
-        [Required]
-        public Orcamento Orcamento { get; set; }
-        [Required]
+        public QuantidadePeca? QuantidadePeca { get; set; }
         public Estoque? Estoque { get; set; }
+        public Entrega? Entrega { get; set; }
     }
 }
